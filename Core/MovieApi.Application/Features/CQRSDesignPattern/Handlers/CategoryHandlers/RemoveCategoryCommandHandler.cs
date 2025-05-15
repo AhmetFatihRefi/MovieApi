@@ -1,4 +1,5 @@
-﻿using MovieApi.Application.Features.CQRSDesignPattern.Commands.CategoryCommands;
+﻿using Microsoft.AspNetCore.Mvc;
+using MovieApi.Application.Features.CQRSDesignPattern.Commands.CategoryCommands;
 using MovieApi.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,11 @@ namespace MovieApi.Application.Features.CQRSDesignPattern.Handlers.CategoryHandl
     public class RemoveCategoryCommandHandler
     {
         private readonly MoviewContext _context;
-
         public RemoveCategoryCommandHandler(MoviewContext context)
         {
             _context = context;
         }
-        public async void Handle(RemoveCategoryCommand command)
+        public async Task Handle(RemoveCategoryCommand command)
         {
             var category = await _context.Categories.FindAsync(command.CategoryId);
             if (category != null)
@@ -25,5 +25,7 @@ namespace MovieApi.Application.Features.CQRSDesignPattern.Handlers.CategoryHandl
                 await _context.SaveChangesAsync();
             }
         }
+
+        
     }
 }
